@@ -1,6 +1,7 @@
 const core = require("@actions/core");
 const github = require("@actions/github");
 const exec = require("@actions/exec");
+const path = require("path");
 const fs = require("fs");
 const { createCanvas } = require("canvas");
 const { drawContributions } = require("github-contributions-canvas");
