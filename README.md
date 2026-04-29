@@ -1,7 +1,8 @@
 # render-contribs
 
 A Github Action that creates an image of all your GitHub contributions, for your profile readme.
-Huge thanks to @sallar. This project was made after diving deep into the source code of their [github-contributions-chart](https://github.com/sallar/github-contributions-chart).
+
+Huge thanks to [@sallar](https://github.com/sallar). This project was made after diving deep into the source code of [github-contributions-chart](https://github.com/sallar/github-contributions-chart).
 
 ```yaml
 name: Render Total Contributions
@@ -16,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - uses: salty-sweet/render-contribs
+      - uses: salty-sweet/render-contribs@main
         with:
           github_token: ${{ secrets.CONTRIBS_TOKEN }}
           zone: "Asia/Manila"
@@ -87,3 +88,6 @@ Here are the other configuration keys and their default values.
 | **output_path**<br>(String) | `assets/contributions.png` | Specifies the output path and name of your contribs sheet.<br><br>**Note:** Paths are relative to repository root. A value of `output.png` will commit the image to the project root, and will overwrite if a file exists in set path. |
 | **zone**<br>(String) | *Etc/UTC* | Specifies timezone for the metadata footer. Use GMT/UTC Offsets or IANA Timezone strings. |
 | **dryrun**<br>(Boolean) | false | Development test-thing. Only prevents the image from being committed to repository when set to true. |
+
+## CONTRIBUTING
+If you've encountered bugs, issues, or any problem, feel free to file a new entry in the **Issues** tab. If you want to contribute, **Fork** this repository and submit a **Pull Request** when you're done!
