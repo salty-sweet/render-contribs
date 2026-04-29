@@ -69,7 +69,7 @@ async function run() {
             data: data,
             username: username,
             themeName: theme,
-            footerText: `Last updated ${DateTime.now().setZone(iana).setLocale('en-GB')} (${locale}) with salty-sweet/render-contribs`,
+            footerText: `Last updated ${DateTime.now().setZone(iana).setLocale('en-GB')} (${iana.name}) with salty-sweet/render-contribs`,
         });
 
         const absolutePath = path.resolve(process.cwd(), outputPath);
