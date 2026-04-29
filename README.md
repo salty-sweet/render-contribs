@@ -14,6 +14,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - uses: actions/checkout@v4
 
@@ -22,7 +24,7 @@ jobs:
           github_token: ${{ secrets.CONTRIBS_TOKEN }}
           zone: "Asia/Manila"
           theme: "dracula"
-          output_path: "./contribs.png"
+          output_path: "assets/contributions.png"
 ```
 
 ## HOW TO SETUP
@@ -32,7 +34,7 @@ jobs:
     > 
     > - From there, you create a new **Fine-Grained Token**, and configure it to only have access to profile readme's repo (i.e. `salty-sweet/salty-sweet` for me). 
     > 
-    > - Add the required **Permissions** by going to **Add Permissions** → **Contents**.
+    > - Add the required **Permissions** by going to **Add Permissions** → **Contents**. Make sure it's set to **Read and Write**. Metadata is required by Contents, so it's an automated add by GitHub itself.
     > 
     > - Click on **Generate Token**. You'll be directed back to the previous page but now with a Fine-grained Token you have to copy.
 
