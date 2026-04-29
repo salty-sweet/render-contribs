@@ -51,7 +51,7 @@ async function run() {
     try {
         let username = core.getInput("username") || github.context.repo.owner;
         const theme = core.getInput("theme");
-        const locale = core.getInput("zone");
+        const zone = core.getInput("zone");
         const outputPath = core.getInput("output_path");
         const isDryRun = core.getInput("dryrun") === "true";
 
