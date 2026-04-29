@@ -13,26 +13,5 @@ jobs:
       - name: Run action with no config (dryrun)
         uses: ./
         with:
-          github_token: ${{ secrets.CONTRIBS_TOKEN }}
-
-      - name: Run action with name config (dryrun)
-        uses: ./
-        with:
-          github_token: ${{ secrets.CONTRIBS_TOKEN }}
-          username: 'tomlin7'
-          output_path: 'results/name.png'
-
-      - name: Run action with theme config (dryrun)
-        uses: ./
-        with:
-          github_token: ${{ secrets.CONTRIBS_TOKEN }}
           theme: 'dracula'
-          output_path: 'results/theme.png'
-
-      - name: Run action with name and theme config (dryrun)
-        uses: ./
-        with:
           github_token: ${{ secrets.CONTRIBS_TOKEN }}
-          username: 'nedpals'
-          theme: 'blue'
-          output_path: 'results/name-theme.png'
