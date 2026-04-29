@@ -27,6 +27,11 @@ jobs:
           output_path: "assets/contributions.png"
 ```
 
+## EXAMPLES
+| From sallar/github-contributions-chart<br>generated with https://github-contributions.vercel.app/<br>(`standard` theme) | From <a href="https://github.com/salty-sweet/">salty-sweet/salty-sweet</a><br>dynamically updates daily using **render-contribs**<br> (`dracula` theme) |
+|-----|-----|
+| <img width="500" alt="image" src="https://github.com/sallar/github-contributions-chart/blob/master/screenshot.png?raw=true" /> | <img width="500" alt="image" src="https://github.com/salty-sweet/salty-sweet/blob/main/contribs.png?raw=true" /> |
+
 ## HOW TO SETUP
 
 1. ### Create a Personal Access Token for your workflow.
