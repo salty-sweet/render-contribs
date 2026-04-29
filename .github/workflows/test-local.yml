@@ -18,6 +18,7 @@ jobs:
       - name: Run action with config
         uses: ./
         with:
+          output_path: assets/something.png
           theme: 'dracula'
           username: 'oliverbooth'
           github_token: ${{ secrets.CONTRIBS_TOKEN }}

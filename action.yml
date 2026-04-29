@@ -24,7 +24,7 @@ inputs:
   locale:
     description: 'Timezone locale for metadata.'
     required: false
-    default: 'Etc/UTC'
+    default: 'UTC'
   dryrun:
     description: 'Development test flag. Defaults to false.'
     required: false
