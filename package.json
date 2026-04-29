@@ -22,6 +22,7 @@
     "@actions/exec": "^1.1.1",
     "@actions/github": "^6.0.0",
     "canvas": "^3.2.3",
-    "github-contributions-canvas": "^0.8.0"
+    "github-contributions-canvas": "^0.8.0",
+    "luxon": "^3.7.2"
   }
 }
