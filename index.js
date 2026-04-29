@@ -67,7 +67,7 @@ async function run() {
             data: data,
             username: username,
             themeName: theme,
-            footerText: `Last updated ${DateTime.now().setZone(locale).toFormat('dd MMMM yyyy, hh:mm a')} (${locale}) with salty-sweet/render-contribs`,
+            footerText: `Last updated ${DateTime.now().setZone(locale).toLocaleString('en-GB')} (${locale}) with salty-sweet/render-contribs`,
         });
 
         const absolutePath = path.resolve(process.cwd(), outputPath);
