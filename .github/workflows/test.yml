@@ -1,7 +1,7 @@
 name: Local Test
 on:
   workflow_dispatch:
-  push: { branches: ["main", "dev"] }
+  # push: { branches: ["main", "dev"] }
 
 jobs:
   test:
