@@ -1,0 +1,51 @@
+name: 'Render Contribs'
+description: 'Generates an image of all your GitHub contributions.'
+author: 'salty-sweet'
+branding:
+  icon: user-check
+  color: gray-dark
+
+inputs:
+  github_token:
+    description: 'GitHub token to fetch data'
+    required: true
+  username:
+    description: 'GitHub username to fetch contributions for'
+    required: false
+    default: ''
+  theme:
+    description: 'Color theme for the rendered image. See a list of them at sallar/github-contributions-canvas.'
+    required: false
+    default: 'standard'
+  output_path:
+    description: 'Output path and file name of the rendered image in your repository. Defaults to "assets/contributions.png".'
+    required: false
+    default: 'assets/contributions.png'
+  zone:
+    description: 'Timezone for metadata.'
+    required: false
+    default: 'Etc/UTC'
+  dryrun:
+    description: 'Development test flag. Defaults to false.'
+    required: false
+    default: false
+    
+runs:
+  using: 'composite'
+  steps:
+    - name: Install dependencies
+      shell: bash
+      run: npm ci
+      working-directory: ${{ github.action_path }}
+
+    - name: Run script
+      shell: bash
+      run: node .
+      working-directory: ${{ github.action_path }}
+      env:
+        INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
+        INPUT_USERNAME: ${{ inputs.username }}
+        INPUT_THEME: ${{ inputs.theme }}
+        INPUT_ZONE: ${{ inputs.zone }}
+        INPUT_OUTPUT_PATH: ${{ inputs.output_path }}
+        INPUT_DRYRUN: ${{ inputs.dryrun }}

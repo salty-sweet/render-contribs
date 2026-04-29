@@ -1,0 +1,27 @@
+name: Local Test
+on:
+  workflow_dispatch:
+  # push: { branches: ["main", "dev"] }
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Run action with no config
+        uses: ./
+        with:
+          zone: 'Asia/Manila'
+          github_token: ${{ secrets.CONTRIBS_TOKEN }}
+
+      - name: Run action with config
+        uses: ./
+        with:
+          output_path: assets/something.png
+          theme: 'dracula'
+          username: 'oliverbooth'
+          github_token: ${{ secrets.CONTRIBS_TOKEN }}
+
+      
