@@ -8,9 +8,8 @@ const { drawContributions } = require("github-contributions-canvas");
 
 async function commitAndPush(outputPath) {
     const token = core.getInput("github_token", { required: true });
-    const repo = github.context.repo; // Object containing {owner, repo}
+    const repo = github.context.repo;
 
-    // 1. Setup Git User
     await exec.exec("git", [
         "config",
         "--global",
@@ -24,22 +23,17 @@ async function commitAndPush(outputPath) {
         "41898282+github-actions[bot]@users.noreply.github.com",
     ]);
 
-    // 2. Prepare the Remote URL with the token for authentication
-    // Format: https://x-access-token:<token>@github.com/owner/repo.git
     const remoteUrl = `https://x-access-token:${token}@github.com/${repo.owner}/${repo.repo}.git`;
 
-    // 3. Add, Commit, and Push
     await exec.exec("git", ["add", outputPath]);
 
     try {
-        // Only commit if there are changes to avoid workflow errors
         await exec.exec("git", [
             "commit",
             "-m",
             "chore: update contribution stats [skip ci]",
         ]);
 
-        // Push using the authenticated URL
         await exec.exec("git", [
             "push",
             remoteUrl,
