@@ -3,7 +3,7 @@ const github = require("@actions/github");
 const exec = require("@actions/exec");
 const path = require("path");
 const fs = require("fs");
-const { DateTime } = require('luxon');
+const { DateTime, IANAZone } = require('luxon');
 const { createCanvas } = require("canvas");
 const { drawContributions } = require("github-contributions-canvas");
 
@@ -51,7 +51,7 @@ async function run() {
     try {
         let username = core.getInput("username") || github.context.repo.owner;
         const theme = core.getInput("theme");
-        const locale = core.getInput("locale");
+        const locale = core.getInput("zone");
         const outputPath = core.getInput("output_path");
         const isDryRun = core.getInput("dryrun") === "true";
 
@@ -62,12 +62,14 @@ async function run() {
         );
         const data = await response.json();
 
+        const iana = IANAZone.isValidZone(zone) ? IANAZone.create(zone) : IANAZone.create('Etc/UTC');
+
         const canvasEl = createCanvas(1000, 1000);
         drawContributions(canvasEl, {
             data: data,
             username: username,
             themeName: theme,
-            footerText: `Last updated ${DateTime.now().setZone(locale).toLocaleString('en-GB')} (${locale}) with salty-sweet/render-contribs`,
+            footerText: `Last updated ${DateTime.now().setZone(iana).setLocale('en-GB')} (${locale}) with salty-sweet/render-contribs`,
         });
 
         const absolutePath = path.resolve(process.cwd(), outputPath);

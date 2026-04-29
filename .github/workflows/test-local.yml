@@ -13,7 +13,7 @@ jobs:
       - name: Run action with no config
         uses: ./
         with:
-          locale: 'Asia/Manila'
+          zone: 'Asia/Manila'
           github_token: ${{ secrets.CONTRIBS_TOKEN }}
 
       - name: Run action with config
