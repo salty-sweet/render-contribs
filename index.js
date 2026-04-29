@@ -11,6 +11,8 @@ async function commitAndPush(outputPath) {
     const token = core.getInput("github_token", { required: true });
     const repo = github.context.repo;
 
+    const execOptions = { cwd: process.env.GITHUB_WORKSPACE };
+
     await exec.exec("git", [
         "config",
         "--global",
@@ -26,20 +28,20 @@ async function commitAndPush(outputPath) {
 
     const remoteUrl = `https://x-access-token:${token}@github.com/${repo.owner}/${repo.repo}.git`;
 
-    await exec.exec("git", ["add", outputPath]);
+    await exec.exec("git", ["add", outputPath], execOptions);
 
     try {
         await exec.exec("git", [
             "commit",
             "-m",
             "chore: update contribution stats [skip ci]",
-        ]);
+        ], execOptions);
 
         await exec.exec("git", [
             "push",
             remoteUrl,
             `HEAD:${github.context.ref}`,
-        ]);
+        ], execOptions);
 
         core.info("Changes pushed successfully.");
     } catch (error) {
@@ -72,7 +74,7 @@ async function run() {
             footerText: `Last updated ${DateTime.now().setZone(iana).toFormat('dd MMMM yyyy HH:mm a')} (${iana.name}) with salty-sweet/render-contribs`,
         });
 
-        const absolutePath = path.resolve(process.cwd(), outputPath);
+        const absolutePath = path.resolve(process.env.GITHUB_WORKSPACE, outputPath);
         const buffer = canvasEl.toBuffer("image/png");
 
         const dir = path.dirname(absolutePath);
