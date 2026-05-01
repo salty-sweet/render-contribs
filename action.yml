@@ -17,6 +17,10 @@ inputs:
     description: 'Color theme for the rendered image. See a list of them at sallar/github-contributions-canvas.'
     required: false
     default: 'standard'
+  custom_theme:
+    description: 'Custom color theme to use for rendering.'
+    required: false
+    default: 'null'
   output_path:
     description: 'Output path and file name of the rendered image in your repository. Defaults to "assets/contributions.png".'
     required: false

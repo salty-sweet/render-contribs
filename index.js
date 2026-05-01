@@ -145,6 +145,8 @@ async function run() {
         const zone = core.getInput("zone");
         const outputPath = core.getInput("output_path");
         const isDryRun = core.getInput("dryrun") === "true";
+        const custom_theme = core.getInput("custom_theme") === 'null' ? null : core.getInput("custom_theme");
+        const parsedTheme = JSON.parse(custom_theme) || null;
 
         core.info(`Fetching data for ${username}...`);
 
@@ -155,19 +157,22 @@ async function run() {
             : IANAZone.create("Etc/UTC");
 
         const canvasEl = createCanvas(1000, 1000);
-        drawContributions(canvasEl, {
+        const options = {
             data: data,
             username: username,
-            themeName: theme,
             footerText: `Last updated ${DateTime.now().setZone(iana).toFormat("dd MMMM yyyy HH:mm a")} (${iana.name}) with salty-sweet/render-contribs`,
-        });
+        };
+
+        if (theme) options.themeName = theme;
+        if (custom_theme) options.customTheme = parsedTheme;
+
+        drawContributions(canvasEl, options);
+        const buffer = canvasEl.toBuffer("image/png");
 
         const absolutePath = path.resolve(
             process.env.GITHUB_WORKSPACE,
             outputPath,
         );
-        const buffer = canvasEl.toBuffer("image/png");
-
         const dir = path.dirname(absolutePath);
         if (!fs.existsSync(dir)) {
             fs.mkdirSync(dir, { recursive: true });
