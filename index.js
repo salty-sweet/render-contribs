@@ -49,6 +49,93 @@ async function commitAndPush(outputPath) {
     }
 }
 
+async function collectContributions(targetUser) {
+    const token = core.getInput("github_token", { required: true });
+    const octokit = github.getOctokit(token);
+
+    const userBaseInfo = await octokit.graphql(
+        `
+      query($userName: String!) {
+        user(login: $userName) { createdAt }
+      }
+    `,
+        { userName: targetUser },
+    );
+    const startYear = new Date(userBaseInfo.user.createdAt).getFullYear();
+    const currentYear = new Date().getFullYear();
+
+    core.info(`Identified ${targetUser}'s account creation date being ${userBaseInfo.user.createdAt}`);
+
+    const output = {
+        years: [],
+        contributions: [],
+    };
+
+    const contribIntensity = {
+        NONE: "0",
+        FIRST_QUARTILE: "1",
+        SECOND_QUARTILE: "2",
+        THIRD_QUARTILE: "3",
+        FOURTH_QUARTILE: "4",
+    };
+
+    for (let year = currentYear; year >= startYear; year--) {
+        core.info(`Processing ${year}...`);
+
+        const from = `${year}-01-01T00:00:00Z`;
+        const to = `${year}-12-31T23:59:59Z`;
+
+        const response = await octokit.graphql(
+            `
+            query($userName: String!, $from: DateTime, $to: DateTime) {
+              user(login: $userName) {
+                contributionsCollection(from: $from, to: $to) {
+                  contributionCalendar {
+                    totalContributions
+                    weeks {
+                      contributionDays {
+                        date
+                        contributionCount
+                        contributionLevel
+                        color
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          `,
+            { userName: targetUser, from, to },
+        );
+
+        const calendar =
+            response.user.contributionsCollection.contributionCalendar;
+        const allDays = calendar.weeks.flatMap((w) => w.contributionDays);
+
+        // Add to years summary
+        output.years.push({
+            year: year.toString(),
+            total: calendar.totalContributions,
+            range: {
+                start: allDays[0].date,
+                end: allDays[allDays.length - 1].date,
+            },
+        });
+
+        const mappedDays = allDays.map((day) => ({
+            date: day.date,
+            count: day.contributionCount,
+            color: day.color,
+            intensity: contribIntensity[day.contributionLevel] || "0",
+        }));
+
+        output.contributions.push(...mappedDays);
+    }
+    output.contributions.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    return output;
+}
+
 async function run() {
     try {
         let username = core.getInput("username") || github.context.repo.owner;
@@ -59,10 +146,7 @@ async function run() {
 
         core.info(`Fetching data for ${username}...`);
 
-        const response = await fetch(
-            `https://github-contributions.vercel.app/api/v1/${username}`,
-        );
-        const data = await response.json();
+        const data = await collectContributions(username)
 
         const iana = IANAZone.isValidZone(zone) ? IANAZone.create(zone) : IANAZone.create('Etc/UTC');
 
