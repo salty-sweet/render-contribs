@@ -50,6 +50,7 @@ runs:
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_USERNAME: ${{ inputs.username }}
         INPUT_THEME: ${{ inputs.theme }}
+        INPUT_CUSTOM_THEME: ${{ inputs.custom_theme }}
         INPUT_ZONE: ${{ inputs.zone }}
         INPUT_OUTPUT_PATH: ${{ inputs.output_path }}
         INPUT_DRYRUN: ${{ inputs.dryrun }}
