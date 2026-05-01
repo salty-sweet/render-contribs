@@ -99,7 +99,7 @@ Here are the other configuration keys and their default values.
 
 ### CUSTOM THEMES
 render-contribs allows you to define your own color theme to use for rendering. You can do it by simply placing your desired colors into a JSON object like this one:
-```json
+```jsonc
 {
   "background": "#ff000000",    // Background color.
   "text": "#008888",            // Color used on title and infometric labels.
@@ -113,6 +113,7 @@ render-contribs allows you to define your own color theme to use for rendering. 
 ```
 > [!IMPORTANT]
 > Having `custom_theme` defined **will override and ignore** any value set to `theme` config key.
+
 > [!TIP]
 > Use hex codes for a sure way to get your colors accepted. RGBA hex codes are supported.
 
