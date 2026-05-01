@@ -102,13 +102,13 @@ render-contribs allows you to define your own color theme to use for rendering. 
 ```jsonc
 {
   "background": "#ff000000",    // Background color.
-  "text": "#008888",            // Color used on title and infometric labels.
-  "meta": "#227722",            // Color used on calendar labels and footer text.
-  "grade0": "#ffffff",          // Color representing days without contributions.
-  "grade1": "#ffdddd",          // Color representing lowest 25% of days of contributions.
-  "grade2": "#ffbbbb",          // Color representing second lowest 25% of days of contributions.
-  "grade3": "#ff9999",          // Color representing second highest 25% of days of contributions.
-  "grade4": "#ff5555",          // Color representing highest 25% of days of contributions.
+  "text": "#be8148",            // Color used on title and infometric labels.
+  "meta": "#6d6159",            // Color used on calendar labels and footer text.
+  "grade0": "#3a3533",          // Color representing days without contributions.
+  "grade1": "#90ca96",          // Color representing lowest 25% of days of contributions.
+  "grade2": "#4da26a",          // Color representing second lowest 25% of days of contributions.
+  "grade3": "#298258",          // Color representing second highest 25% of days of contributions.
+  "grade4": "#eaba73"           // Color representing highest 25% of days of contributions.
 }
 ```
 > [!IMPORTANT]
