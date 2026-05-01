@@ -3,7 +3,7 @@ const github = require("@actions/github");
 const exec = require("@actions/exec");
 const path = require("path");
 const fs = require("fs");
-const { DateTime, IANAZone } = require('luxon');
+const { DateTime, IANAZone } = require("luxon");
 const { createCanvas } = require("canvas");
 const { drawContributions } = require("github-contributions-canvas");
 
@@ -31,17 +31,17 @@ async function commitAndPush(outputPath) {
     await exec.exec("git", ["add", outputPath], execOptions);
 
     try {
-        await exec.exec("git", [
-            "commit",
-            "-m",
-            "chore: update contribution stats [skip ci]",
-        ], execOptions);
+        await exec.exec(
+            "git",
+            ["commit", "-m", "chore: update contribution stats [skip ci]"],
+            execOptions,
+        );
 
-        await exec.exec("git", [
-            "push",
-            remoteUrl,
-            `HEAD:${github.context.ref}`,
-        ], execOptions);
+        await exec.exec(
+            "git",
+            ["push", remoteUrl, `HEAD:${github.context.ref}`],
+            execOptions,
+        );
 
         core.info("Changes pushed successfully.");
     } catch (error) {
@@ -64,7 +64,9 @@ async function collectContributions(targetUser) {
     const startYear = new Date(userBaseInfo.user.createdAt).getFullYear();
     const currentYear = new Date().getFullYear();
 
-    core.info(`Identified ${targetUser}'s account creation date being ${userBaseInfo.user.createdAt}`);
+    core.info(
+        `Identified ${targetUser}'s account creation date being ${userBaseInfo.user.createdAt}`,
+    );
 
     const output = {
         years: [],
@@ -146,19 +148,24 @@ async function run() {
 
         core.info(`Fetching data for ${username}...`);
 
-        const data = await collectContributions(username)
+        const data = await collectContributions(username);
 
-        const iana = IANAZone.isValidZone(zone) ? IANAZone.create(zone) : IANAZone.create('Etc/UTC');
+        const iana = IANAZone.isValidZone(zone)
+            ? IANAZone.create(zone)
+            : IANAZone.create("Etc/UTC");
 
         const canvasEl = createCanvas(1000, 1000);
         drawContributions(canvasEl, {
             data: data,
             username: username,
             themeName: theme,
-            footerText: `Last updated ${DateTime.now().setZone(iana).toFormat('dd MMMM yyyy HH:mm a')} (${iana.name}) with salty-sweet/render-contribs`,
+            footerText: `Last updated ${DateTime.now().setZone(iana).toFormat("dd MMMM yyyy HH:mm a")} (${iana.name}) with salty-sweet/render-contribs`,
         });
 
-        const absolutePath = path.resolve(process.env.GITHUB_WORKSPACE, outputPath);
+        const absolutePath = path.resolve(
+            process.env.GITHUB_WORKSPACE,
+            outputPath,
+        );
         const buffer = canvasEl.toBuffer("image/png");
 
         const dir = path.dirname(absolutePath);
