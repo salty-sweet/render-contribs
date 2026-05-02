@@ -17,6 +17,10 @@ inputs:
     description: 'Color theme for the rendered image. See a list of them at sallar/github-contributions-canvas.'
     required: false
     default: 'standard'
+  custom_theme:
+    description: 'Custom color theme to use for rendering.'
+    required: false
+    default: 'null'
   output_path:
     description: 'Output path and file name of the rendered image in your repository. Defaults to "assets/contributions.png".'
     required: false
@@ -46,6 +50,7 @@ runs:
         INPUT_GITHUB_TOKEN: ${{ inputs.github_token }}
         INPUT_USERNAME: ${{ inputs.username }}
         INPUT_THEME: ${{ inputs.theme }}
+        INPUT_CUSTOM_THEME: ${{ inputs.custom_theme }}
         INPUT_ZONE: ${{ inputs.zone }}
         INPUT_OUTPUT_PATH: ${{ inputs.output_path }}
         INPUT_DRYRUN: ${{ inputs.dryrun }}

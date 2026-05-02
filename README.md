@@ -92,9 +92,30 @@ Here are the other configuration keys and their default values.
 | **github_token**<br>(String) | `${{secrets.CONTRIBS_TOKEN}}` | **REQUIRED!**<br>Needed for automatic collection of username and automatic commits. |
 | **username**<br>(String) | *Your Username* | Specifies the specific GitHub user to collect stats from.<br><br>**Note:** You don't need this populated when generating for yourself since this action automatically acquires your username by default. |
 | **theme**<br>(String) | `standard` | Theme used in rendering your contribs sheet. Preview them at https://github-contributions.vercel.app/.<br><br> The available values are:<br>`standard`, `halloween`, `teal`, `leftPad`, `dracula`, `blue`, `panda`, `sunny`, `pink`, `YlGnBu`, `solarizedDark`, `solarizedLight`. |
+| **custom_theme**<br>(JSON string) | `null` | Can be used to define a custom theme! Read further below this table. |
 | **output_path**<br>(String) | `assets/contributions.png` | Specifies the output path and name of your contribs sheet.<br><br>**Note:** Paths are relative to repository root. A value of `output.png` will commit the image to the project root, and will overwrite if a file exists in set path. |
 | **zone**<br>(String) | `Etc/UTC` | Specifies timezone for the metadata footer. Use GMT/UTC Offsets or IANA Timezone strings. |
 | **dryrun**<br>(Boolean) | `false` | Development test-thing. Only prevents the image from being committed to repository when set to true. |
+
+### CUSTOM THEMES
+render-contribs allows you to define your own color theme to use for rendering. You can do it by simply placing your desired colors into a JSON object like this one:
+```jsonc
+{
+  "background": "#ff000000",    // Background color.
+  "text": "#be8148",            // Color used on title and infometric labels.
+  "meta": "#6d6159",            // Color used on calendar labels and footer text.
+  "grade0": "#3a3533",          // Color representing days without contributions.
+  "grade1": "#90ca96",          // Color representing lowest 25% of days of contributions.
+  "grade2": "#4da26a",          // Color representing second lowest 25% of days of contributions.
+  "grade3": "#298258",          // Color representing second highest 25% of days of contributions.
+  "grade4": "#eaba73"           // Color representing highest 25% of days of contributions.
+}
+```
+> [!IMPORTANT]
+> Having `custom_theme` defined **will override and ignore** any value set to `theme` config key.
+
+> [!TIP]
+> Use hex codes for a sure way to get your colors accepted. RGBA hex codes are supported.
 
 ## CONTRIBUTING
 If you've encountered bugs, issues, or any problem, feel free to file a new entry in the **Issues** tab. If you want to contribute, **Fork** this repository and submit a **Pull Request** when you're done!
